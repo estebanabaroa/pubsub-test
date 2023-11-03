@@ -62,7 +62,7 @@ func main() {
     }
 
     // join pubsub
-    topic, err := ps.Join("demo2")
+    topic, err := ps.Join("demo")
     if err != nil {
         panic(err)
     }
