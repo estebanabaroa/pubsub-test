@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack --mode development --config webpack.config.js",
+    "webpack:watch": "webpack watch --mode development --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,9 +15,16 @@
     "@chainsafe/libp2p-noise": "13.0.2",
     "@chainsafe/libp2p-yamux": "5.0.0",
     "@libp2p/mplex": "9.0.9",
+    "@libp2p/peer-id-factory": "^3.0.6",
     "@libp2p/tcp": "8.0.10",
     "@libp2p/websockets": "7.0.10",
+    "@libp2p/webtransport": "^3.1.5",
+    "fs-extra": "^11.1.1",
     "libp2p": "0.46.16",
     "uint8arrays": "4.0.6"
+  },
+  "devDependencies": {
+    "webpack": "5.72.1",
+    "webpack-cli": "4.9.2"
   }
 }
