@@ -32,9 +32,7 @@ const log = (...args) => {
         p.style.whiteSpace = 'pre'
         document.body.appendChild(p)
     }
-    catch (e) {
-        console.log(e)
-    }
+    catch (e) {}
 }
 
 const logEvents = (nodeName, node) => {
