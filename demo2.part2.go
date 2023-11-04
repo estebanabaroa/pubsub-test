@@ -8,6 +8,7 @@ import (
     "fmt"
     "log"
     "os"
+    "time"
 
     "github.com/libp2p/go-libp2p"
     "github.com/libp2p/go-libp2p/core/crypto"
@@ -68,6 +69,18 @@ func main() {
     }
     go streamConsoleTo(ctx, topic)
 
+    // publish messages every 5 second
+    go func() {
+        for {
+            // sleep 5 second
+            time.Sleep(5 * time.Second)
+
+            if err := topic.Publish(ctx, []byte("hello from libp2p go\n")); err != nil {
+                fmt.Println("### Publish error:", err)
+            }
+        }
+    }()
+
     sub, err := topic.Subscribe()
     if err != nil {
         panic(err)
@@ -87,7 +100,7 @@ func makeHost(port int, privateKeyString string) (host.Host, error) {
     }
 
     return libp2p.New(
-        libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/0.0.0.0/udp/%d/quic-v1/webtransport", port)),
+        libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/127.0.0.1/udp/%d/quic-v1/webtransport", port)),
         libp2p.Identity(privateKey),
     )
 }
