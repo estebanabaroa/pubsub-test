@@ -64,7 +64,10 @@ try {
     peerId = split[1]
     peerMultiAddress = split[0]
 }
-catch (e) {}
+catch (e) {
+    log('failed to get peer from query string')
+    log(e)
+}
 
 ;(async () => {
 
