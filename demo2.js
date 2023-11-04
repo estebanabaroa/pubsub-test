@@ -59,14 +59,16 @@ const logEvents = (nodeName, node) => {
 
 let peerId, peerMultiAddress
 try {
-    // example /ip4/0.0.0.0/udp/36338/quic-v1/webtransport/certhash/uEiAKYNN-nS53kXTQTzM0__ksuMI9mEczZA9YbNyyth-NLw/certhash/uEiD9Ja-UEHkuLjtaVKX7D1wZVri6GKkrmxFOue8-9YMAzg/p2p/Qmbi4zsa9H8WDZk8akwSiBqEe8U1Gedh8Mh4R4aCfR3Twx
+    // example 
     const split = location.search.replace(/^\?/, '').split('/p2p/')
     peerId = split[1]
     peerMultiAddress = split[0]
 }
 catch (e) {
-    log('failed to get peer from query string')
     log(e)
+}
+if (!peerId || !peerMultiAddress) {
+    log('failed to get peer to connect to from query string, example: /demo2.html?/ip4/0.0.0.0/udp/36338/quic-v1/webtransport/certhash/uEiAKYNN-nS53kXTQTzM0__ksuMI9mEczZA9YbNyyth-NLw/certhash/uEiD9Ja-UEHkuLjtaVKX7D1wZVri6GKkrmxFOue8-9YMAzg/p2p/Qmbi4zsa9H8WDZk8akwSiBqEe8U1Gedh8Mh4R4aCfR3Twx')
 }
 
 ;(async () => {
