@@ -5,7 +5,6 @@ import (
     "context"
     "flag"
     "fmt"
-    "log"
     "os"
     "time"
     "strings"
@@ -39,16 +38,20 @@ func main() {
     // create libp2p
     h, err := makeHost(*port, *privateKeyString)
     if err != nil {
-        log.Println(err)
+        fmt.Println(err)
         return
     }
 
     // print how to connect to our peer
     listenAddresses := h.Network().ListenAddresses()
     for i := 0; i < len(listenAddresses); i++ {
+        fmt.Println(listenAddresses[i])
+    }
+    fmt.Println(h.ID())
+    for i := 0; i < len(listenAddresses); i++ {
         listenAddress := fmt.Sprintf("%v", listenAddresses[i])
         if strings.Contains(listenAddress, "webtransport") && strings.Contains(listenAddress, "ip4") {
-            log.Printf("\n\nrun '--peer %v/p2p/%s' in another terminal to connect to this peer\n\n", listenAddresses[i], h.ID())
+            fmt.Printf("\nrun '--peer %v/p2p/%s' in another terminal to connect to this peer\n\n", listenAddresses[i], h.ID())
         }
     }
 
@@ -84,7 +87,7 @@ func main() {
             // sleep 5 second
             time.Sleep(5 * time.Second)
 
-            if err := topic.Publish(ctx, []byte("hello from libp2p go\n")); err != nil {
+            if err := topic.Publish(ctx, []byte("hello from libp2p go")); err != nil {
                 fmt.Println("### Publish error:", err)
             }
         }
@@ -105,7 +108,7 @@ func makeHost(port int, privateKeyString string) (host.Host, error) {
     privateKeyBytes := []byte(privateKeyString)
     privateKey, _, err := crypto.GenerateEd25519Key(bytes.NewReader(privateKeyBytes))
     if err != nil {
-        log.Println(err)
+        fmt.Println(err)
         return nil, err
     }
 
