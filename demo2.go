@@ -2,13 +2,13 @@ package main
 
 import (
     "bytes"
-    "bufio"
     "context"
     "flag"
     "fmt"
     "log"
     "os"
     "time"
+    "strings"
 
     "github.com/libp2p/go-libp2p"
     "github.com/libp2p/go-libp2p/core/crypto"
@@ -23,7 +23,7 @@ func main() {
 
     port := flag.Int("port", 0, "port number of libp2p host")
     peerString := flag.String("peer", "", "peer multiaddress to connect to")
-    privateKeyString := flag.String("private-key", "", "private key of the libp2p identity")
+    privateKeyString := flag.String("private-key", string(make([]byte, 32)), "private key of the libp2p identity")
     flag.Parse()
 
     if len([]byte(*privateKeyString)) < 32 {
@@ -38,9 +38,13 @@ func main() {
         return
     }
 
-    log.Printf("run '--peer %v/p2p/%s' in another terminal to connect to this peer\n", h.Network().ListenAddresses()[1], h.ID())
-    log.Println("waiting for incoming connection")
-    log.Println()
+    // print how to connect to our peer
+    listenAddresses := h.Network().ListenAddresses()
+    for i := 0; i < len(listenAddresses); i++ {
+        if strings.Contains(fmt.Sprintf("%v", listenAddresses[i]), "webtransport") {
+            log.Printf("\n\nrun '--peer %v/p2p/%s' in another terminal to connect to this peer\n\n", listenAddresses[i], h.ID())
+        }
+    }
 
     // peer to connect to
     directPeers := []peer.AddrInfo{}
@@ -67,7 +71,6 @@ func main() {
     if err != nil {
         panic(err)
     }
-    go streamConsoleTo(ctx, topic)
 
     // publish messages every 5 second
     go func() {
@@ -81,6 +84,7 @@ func main() {
         }
     }()
 
+    // sub to topic and print all messages
     sub, err := topic.Subscribe()
     if err != nil {
         panic(err)
@@ -100,22 +104,13 @@ func makeHost(port int, privateKeyString string) (host.Host, error) {
     }
 
     return libp2p.New(
-        libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/127.0.0.1/udp/%d/quic-v1/webtransport", port)),
+        libp2p.ListenAddrStrings(
+            // fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", port), 
+            // fmt.Sprintf("/ip4/127.0.0.1/udp/%d/quic-v1", port), 
+            fmt.Sprintf("/ip4/127.0.0.1/udp/%d/quic-v1/webtransport", port),
+        ),
         libp2p.Identity(privateKey),
     )
-}
-
-func streamConsoleTo(ctx context.Context, topic *pubsub.Topic) {
-    reader := bufio.NewReader(os.Stdin)
-    for {
-        s, err := reader.ReadString('\n')
-        if err != nil {
-            panic(err)
-        }
-        if err := topic.Publish(ctx, []byte(s)); err != nil {
-            fmt.Println("### Publish error:", err)
-        }
-    }
 }
 
 func printMessagesFrom(ctx context.Context, sub *pubsub.Subscription) {

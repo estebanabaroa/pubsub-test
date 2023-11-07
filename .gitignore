@@ -1,2 +1,4 @@
 node_modules
 TODO.md
+.env
+demo2-deploy.sh

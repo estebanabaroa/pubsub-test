@@ -11,7 +11,7 @@ import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 
 const log = (...args) => {
     console.log(...args)
-    try {
+    const logHtml = (...args) => {
         const p = document.createElement('p')
         let textContent = ''
         for (const [i, arg] of args.entries()) {
@@ -30,7 +30,15 @@ const log = (...args) => {
         }
         p.textContent = textContent
         p.style.whiteSpace = 'pre'
-        document.body.appendChild(p)
+        document.body.prepend(p)
+    }
+    try {
+        if (document.readyState !== 'complete') {
+            window.addEventListener('load', () => logHtml(...args))
+        }
+        else {
+            logHtml(...args)
+        }
     }
     catch (e) {}
 }
@@ -70,6 +78,7 @@ if (!peerId || !peerMultiAddress) {
 }
 
 ;(async () => {
+try {
 
 // node1 is created in go because listening on webTransport is not implemented in libp2p js
 const node1 = {
@@ -84,6 +93,13 @@ const createNode2 = async () => {
         transports: [webTransport()],
         streamMuxers: [yamux(), mplex()],
         connectionEncryption: [noise()],
+        connectionGater: {
+            denyDialMultiaddr: async () => false,
+        },
+        connectionManager: {
+            maxConnections: 10,
+            minConnections: 5
+        },
         services: {
             // we add the Pubsub module we want
             pubsub: gossipsub({
@@ -115,4 +131,7 @@ setInterval(() => {
   })
 }, 1000)
 
+} catch (e) {
+    log(e.stack)
+}
 })()
