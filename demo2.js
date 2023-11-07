@@ -120,7 +120,7 @@ const topic = 'demo'
 
 // sub
 node2.services.pubsub.addEventListener('message', (evt) => {
-    log(`node2 received: ${uint8ArrayToString(evt.detail.data)} on topic ${evt.detail.topic}`)
+    log(`node2: ${evt.detail.from}: ${uint8ArrayToString(evt.detail.data)} on topic ${evt.detail.topic}`)
 })
 await node2.services.pubsub.subscribe(topic)
 
