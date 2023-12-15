@@ -76,7 +76,7 @@ const logEvents = (nodeName, node) => {
         'connection:close',
         'connection:open',
         'connection:prune',
-        'peer:connect',
+        // 'peer:connect',
         'peer:disconnect',
         'peer:discovery',
         'peer:identify',
@@ -106,7 +106,7 @@ while(nodeCount < totalNodes) {
     const nodeName = `node${nodeCount}${nodeCount === 1 ? '-bootstrap' : ''}`
     console.log(nodeName, node.getMultiaddrs())
 
-    // if not a bootstrap node, join pubsub
+    // don't let the boostrap node join pubsub, to test peer discovery
     if (nodeCount !== 1) {
         // sub
         node.services.pubsub.addEventListener('message', (evt) => {
