@@ -113,9 +113,9 @@ func makeHost(port int, privateKeyString string) (host.Host, error) {
     }
 
     return libp2p.New(
-        // libp2p.ListenAddrStrings(
-        //     fmt.Sprintf("/ip4/127.0.0.1/udp/%d/quic-v1/webtransport", port),
-        // ),
+        libp2p.ListenAddrStrings(
+            fmt.Sprintf("/ip4/127.0.0.1/udp/%d/quic-v1/webtransport", port),
+        ),
         libp2p.Identity(privateKey),
     )
 }
