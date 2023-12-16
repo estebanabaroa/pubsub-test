@@ -6,7 +6,8 @@ const rootFolder = path.dirname(fileURLToPath(import.meta.url))
 const outputFolder = path.resolve(rootFolder, 'webpacked')
 
 const entries = {
-  demo2: './demo2.js'
+  demo2: './demo2.js',
+  demo4: './demo4.js'
 }
 
 export default {

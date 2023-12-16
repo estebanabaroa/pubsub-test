@@ -8,6 +8,9 @@ import { yamux } from '@chainsafe/libp2p-yamux'
 import { noise } from '@chainsafe/libp2p-noise'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import { bootstrap } from '@libp2p/bootstrap'
+import { identifyService } from 'libp2p/identify'
+import { kadDHT } from '@libp2p/kad-dht'
 
 const log = (...args) => {
     console.log(...args)
@@ -65,23 +68,22 @@ const logEvents = (nodeName, node) => {
 
 let peerId, peerMultiAddress
 try {
-    // example: /demo2.html?/ip4/0.0.0.0/udp/36338/quic-v1/webtransport/certhash/uEiAKYNN-nS53kXTQTzM0__ksuMI9mEczZA9YbNyyth-NLw/certhash/uEiD9Ja-UEHkuLjtaVKX7D1wZVri6GKkrmxFOue8-9YMAzg/p2p/Qmbi4zsa9H8WDZk8akwSiBqEe8U1Gedh8Mh4R4aCfR3Twx
-    const split = location.search.replace(/^\?/, '').split('/p2p/')
-    peerId = split[1]
-    peerMultiAddress = split[0]
+    // example: /demo4.html?/ip4/0.0.0.0/udp/36338/quic-v1/webtransport/certhash/uEiAKYNN-nS53kXTQTzM0__ksuMI9mEczZA9YbNyyth-NLw/certhash/uEiD9Ja-UEHkuLjtaVKX7D1wZVri6GKkrmxFOue8-9YMAzg/p2p/Qmbi4zsa9H8WDZk8akwSiBqEe8U1Gedh8Mh4R4aCfR3Twx 
+    peerMultiAddress = location.search.replace(/^\?/, '')
+    peerId = peerMultiAddress.split('/p2p/')[1]
 }
 catch (e) {
     log(e)
 }
 if (!peerId || !peerMultiAddress) {
-    log('failed to get peer to connect to from query string, example: /demo2.html?/ip4/0.0.0.0/udp/36338/quic-v1/webtransport/certhash/uEiAKYNN-nS53kXTQTzM0__ksuMI9mEczZA9YbNyyth-NLw/certhash/uEiD9Ja-UEHkuLjtaVKX7D1wZVri6GKkrmxFOue8-9YMAzg/p2p/Qmbi4zsa9H8WDZk8akwSiBqEe8U1Gedh8Mh4R4aCfR3Twx')
+    log('failed to get peer to connect to from query string, example: /demo4.html?/ip4/0.0.0.0/udp/36338/quic-v1/webtransport/certhash/uEiAKYNN-nS53kXTQTzM0__ksuMI9mEczZA9YbNyyth-NLw/certhash/uEiD9Ja-UEHkuLjtaVKX7D1wZVri6GKkrmxFOue8-9YMAzg/p2p/Qmbi4zsa9H8WDZk8akwSiBqEe8U1Gedh8Mh4R4aCfR3Twx')
 }
 
 ;(async () => {
 try {
 
-// node1 is created in go because listening on webTransport is not implemented in libp2p js
-const node1 = {
+// bootstrap node is created in go because listening on webTransport is not implemented in libp2p js
+const bootstrapNode = {
     peerId: peerIdFromString(peerId),
     getMultiaddrs: () => [multiaddr(peerMultiAddress)]
 }
@@ -90,6 +92,9 @@ const createNode2 = async () => {
     const node = await createLibp2p({
         // can't listen using webtransport in libp2p js
         // addresses: {listen: []},
+        peerDiscovery: [
+            bootstrap({list: bootstrapNode.getMultiaddrs()})
+        ],
         transports: [webTransport()],
         streamMuxers: [yamux(), mplex()],
         connectionEncryption: [noise()],
@@ -102,9 +107,13 @@ const createNode2 = async () => {
             minConnections: 5
         },
         services: {
+            identify: identifyService(), // required for peer discovery of pubsub
+            dht: kadDHT({
+                protocolPrefix: '/plebbit',
+                //  clientMode: true // if not publicaly dialable
+            }), // p2p peer discovery
             pubsub: gossipsub({
                 allowPublishToZeroPeers: true,
-                directPeers: [{id: node1.peerId, addrs: node1.getMultiaddrs()}]
             })
         }
     })
@@ -114,7 +123,7 @@ const createNode2 = async () => {
 const node2 = await createNode2()
 
 // log addresses
-log('node1', node1.getMultiaddrs(), 'node2', node2.getMultiaddrs())
+log('bootstrapNode', bootstrapNode.getMultiaddrs(), 'node2', node2.getMultiaddrs())
 
 const topic = 'demo'
 
