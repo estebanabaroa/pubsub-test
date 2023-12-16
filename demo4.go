@@ -64,6 +64,8 @@ func main() {
     go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
     go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
     go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
+    go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
+    go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
 
     // wait forever
     select {}
@@ -87,7 +89,7 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
         // options that maybe should be enabled
         libp2p.EnableHolePunching(), // disabled by default
         libp2p.EnableNATService(), // not sure if disabled by default
-        libp2p.EnableRelayService(), // // not sure if disabled by default
+        libp2p.EnableRelayService(), // not sure if disabled by default
     )
     if err != nil {
         fmt.Println(err)
@@ -95,17 +97,16 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
     }
 
     // create dht peer discovery
-    kdht, err := dht.New(
+    _, err = dht.New(
         ctx, 
         h, 
         dht.ProtocolPrefix("/plebbit/lan"),
-        // dht.Mode(dht.ModeServer),
+        dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
     )
     if err != nil {
         return nil, err
     }
-    rendezvous := "plebbit"
-    go peerDiscovery(ctx, h, kdht, rendezvous)
+    // go routingPeerDiscovery(ctx, h, kdht, "plebbit")
 
     return h, nil
 }
@@ -115,7 +116,7 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
         // options that maybe should be enabled
         libp2p.EnableHolePunching(), // disabled by default
         libp2p.EnableNATService(), // not sure if disabled by default
-        libp2p.EnableRelayService(), // // not sure if disabled by default
+        libp2p.EnableRelayService(), // not sure if disabled by default
     )
     if err != nil {
         fmt.Println(err)
@@ -123,30 +124,28 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
     }
 
     // connect to bootstrap peer
-    directPeer, err := peer.AddrInfoFromString(bootstrapMultiaddressString)
+    bootstrapPeer, err := peer.AddrInfoFromString(bootstrapMultiaddressString)
     if err != nil {
         panic(err)
     }
-    h.Connect(ctx, *directPeer)
 
     // create dht peer discovery
-    kdht, err := dht.New(
+    _, err = dht.New(
         ctx, 
         h, 
         dht.ProtocolPrefix("/plebbit/lan"),
-        // dht.Mode(dht.ModeServer),
+        dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
+        dht.BootstrapPeers(*bootstrapPeer),
     )
     if err != nil {
         fmt.Println(err)
     }
-    rendezvous := "plebbit"
-    go peerDiscovery(ctx, h, kdht, rendezvous)
+    // go routingPeerDiscovery(ctx, h, kdht, "plebbit")
 
     // create pubsub
     ps, err := pubsub.NewGossipSub(
         ctx, 
         h,
-        pubsub.WithDirectPeers([]peer.AddrInfo{*directPeer}),
     )
     if err != nil {
         panic(err)
@@ -176,20 +175,21 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
     if err != nil {
         panic(err)
     }
-    printMessagesFrom(ctx, sub)
+    printMessagesFrom(ctx, h, sub)
 }
 
-func printMessagesFrom(ctx context.Context, sub *pubsub.Subscription) {
+func printMessagesFrom(ctx context.Context, h host.Host, sub *pubsub.Subscription) {
     for {
         m, err := sub.Next(ctx)
         if err != nil {
             panic(err)
         }
-        fmt.Println(m.ReceivedFrom, ": ", string(m.Message.Data))
+        fmt.Println(h.ID(), ": ", string(m.Message.Data))
     }
 }
 
-func peerDiscovery(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvous string) {
+// routing peer discovery doesn't seem to be needed anymore
+func routingPeerDiscovery(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvous string) {
     routingDiscovery := routing.NewRoutingDiscovery(dht)
 
     discovery.Advertise(ctx, routingDiscovery, rendezvous)
@@ -204,6 +204,7 @@ func peerDiscovery(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvou
         case <-ticker.C:
 
             peers, err := discovery.FindPeers(ctx, routingDiscovery, rendezvous)
+
             if err != nil {
                 panic(err)
             }
@@ -212,13 +213,16 @@ func peerDiscovery(ctx context.Context, h host.Host, dht *dht.IpfsDHT, rendezvou
                 if p.ID == h.ID() {
                     continue
                 }
+                fmt.Println(h.ID(), ": discovered peer", p.ID)
                 if h.Network().Connectedness(p.ID) != network.Connected {
                     _, err = h.Network().DialPeer(ctx, p.ID)
                     if err != nil {
-                        fmt.Printf("Failed to connect to peer (%s): %s", p.ID, err.Error())
+                        fmt.Println(h.ID(), ": failed connect to peer", p.ID, err.Error())
                         continue
                     }
-                    fmt.Printf("Connected to peer %s", p.ID.Pretty())
+                    fmt.Println(h.ID(), ": connected to peer", p.ID)
+                } else {
+                    fmt.Println(h.ID(), ": already connected", p.ID)
                 }
             }
         }
