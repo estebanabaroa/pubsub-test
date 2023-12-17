@@ -62,10 +62,6 @@ func main() {
 
     // create pubsub peers and connect them to boostrap peer
     go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
-    go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
-    go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
-    go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
-    go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
 
     // wait forever
     select {}

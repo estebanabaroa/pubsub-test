@@ -1,0 +1,64 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add @libp2p/webrtc
+
+PATH: 
+  /home/user/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/go/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.17.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/user/Desktop/projects/pubsub-test/package.json: Unexpected token } in JSON at position 859
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "pubsub-test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+      "webpack": "webpack --mode development --config webpack.config.js",
+      "webpack:watch": "webpack watch --mode development --config webpack.config.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@chainsafe/libp2p-gossipsub": "10.1.0",
+      "@chainsafe/libp2p-noise": "13.0.2",
+      "@chainsafe/libp2p-yamux": "5.0.0",
+      "@libp2p/bootstrap": "^9.0.12",
+      "@libp2p/identify": "^1.0.6",
+      "@libp2p/kad-dht": "^9.3.6",
+      "@libp2p/mdns": "^9.0.14",
+      "@libp2p/mplex": "9.0.9",
+      "@libp2p/peer-id-factory": "^3.0.6",
+      "@libp2p/tcp": "8.0.10",
+      "@libp2p/websockets": "7.0.10",
+      "@libp2p/webtransport": "^3.1.5",
+      "fs-extra": "^11.1.1",
+      "libp2p": "0.46.16",
+      "uint8arrays": "4.0.6",
+    },
+    "devDependencies": {
+      "webpack": "5.72.1",
+      "webpack-cli": "4.9.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
