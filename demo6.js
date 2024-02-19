@@ -12,6 +12,7 @@ import { bootstrap } from '@libp2p/bootstrap'
 import { identifyService } from 'libp2p/identify'
 import { kadDHT } from '@libp2p/kad-dht'
 import { webRTCDirect } from '@libp2p/webrtc'
+import { webSockets } from '@libp2p/websockets'
 // import { circuitRelayTransport } from '@libp2p/circuit-relay-v2'
 
 const log = (...args) => {
@@ -89,6 +90,7 @@ const createNode2 = async () => {
             bootstrap(bootstrapConfig)
         ],
         transports: [
+            webSockets(), // needed for default libp2p.io bootstrap nodes
             webTransport(),
             webRTCDirect(),
             // circuitRelayTransport({discoverRelays: 1}) // TODO: test this later, probably need to upgrade libp2p, also test protocol autonat and protocol dcutr
