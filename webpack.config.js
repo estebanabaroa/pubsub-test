@@ -8,7 +8,8 @@ const outputFolder = path.resolve(rootFolder, 'webpacked')
 const entries = {
   demo2: './demo2.js',
   demo4: './demo4.js',
-  demo5: './demo5.js'
+  demo5: './demo5.js',
+  demo6: './demo6.js'
 }
 
 export default {
