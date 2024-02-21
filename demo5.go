@@ -101,7 +101,6 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
         h, 
         protocolPrefix,
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
-        dht.BootstrapPeers(*libp2pIoBootstrapPeer),
     )
     if err != nil {
         return nil, err
@@ -135,7 +134,7 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
         h, 
         protocolPrefix,
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
-        dht.BootstrapPeers(*bootstrapPeer, *libp2pIoBootstrapPeer),
+        dht.BootstrapPeers(*bootstrapPeer),
     )
     if err != nil {
         fmt.Println(err)
