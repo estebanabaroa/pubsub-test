@@ -104,7 +104,7 @@ const createNode2 = async () => {
             denyDialMultiaddr: async () => false,
         },
         connectionManager: {
-            maxConnections: 10,
+            maxConnections: 200,
             minConnections: 5
         },
         services: {
