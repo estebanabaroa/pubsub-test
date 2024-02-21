@@ -80,10 +80,10 @@ const bootstrapConfig = {
     list: [
         // "/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
         // "/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
-        // "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
+        "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
         // "/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
         // "/ip4/104.131.131.82/tcp/4001/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
-        "/ip4/5.196.247.5/udp/56293/quic-v1/webtransport/certhash/uEiDOWT_yVYUsc-iTwymz8eKSXVCmCz1gW_ahriMGlFniFw/certhash/uEiCO7WkWhmYiK7uMjOP75GNaVZLoPqpPqZ2a_KHA3HHncg/p2p/12D3KooWDDnkUmiUsQXTsRz7R3e66A4B5WGr5qg4ApeEmxrmkDB8"
+        // "/ip4/5.196.247.5/udp/56293/quic-v1/webtransport/certhash/uEiDOWT_yVYUsc-iTwymz8eKSXVCmCz1gW_ahriMGlFniFw/certhash/uEiCO7WkWhmYiK7uMjOP75GNaVZLoPqpPqZ2a_KHA3HHncg/p2p/12D3KooWDDnkUmiUsQXTsRz7R3e66A4B5WGr5qg4ApeEmxrmkDB8"
     ]
 }
 
