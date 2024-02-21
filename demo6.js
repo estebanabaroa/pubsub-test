@@ -15,7 +15,7 @@ import { webRTCDirect } from '@libp2p/webrtc'
 import { webSockets } from '@libp2p/websockets'
 // import { circuitRelayTransport } from '@libp2p/circuit-relay-v2'
 
-document.title = 'v3'
+document.title = 'v4'
 
 const log = (...args) => {
     console.log(...args)
@@ -85,7 +85,8 @@ const bootstrapConfig = {
         // "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
         // "/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
         // "/ip4/104.131.131.82/tcp/4001/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
-        "/ip4/5.196.247.5/udp/35478/quic-v1/webtransport/certhash/uEiDOWT_yVYUsc-iTwymz8eKSXVCmCz1gW_ahriMGlFniFw/certhash/uEiCO7WkWhmYiK7uMjOP75GNaVZLoPqpPqZ2a_KHA3HHncg/p2p/12D3KooWDDnkUmiUsQXTsRz7R3e66A4B5WGr5qg4ApeEmxrmkDB8"
+        // "/ip4/5.196.247.5/udp/35478/quic-v1/webtransport/certhash/uEiDOWT_yVYUsc-iTwymz8eKSXVCmCz1gW_ahriMGlFniFw/certhash/uEiCO7WkWhmYiK7uMjOP75GNaVZLoPqpPqZ2a_KHA3HHncg/p2p/12D3KooWDDnkUmiUsQXTsRz7R3e66A4B5WGr5qg4ApeEmxrmkDB8"
+        "/ip4/5.196.247.5/udp/23852/quic-v1/webtransport/certhash/uEiDTOnVKPBtmlvqu6KWEgviY-L8YYXqiQWniGdIX64OGlg/certhash/uEiDD3U_CtllS3IbR5ZGfxR2DsRTOI4GOORNfrhq8ERQ-cw"
     ]
 }
 
