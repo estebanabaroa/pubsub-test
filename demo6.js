@@ -20,11 +20,13 @@ const log = (...args) => {
     const logHtml = (...args) => {
         const p = document.createElement('p')
         let textContent = ''
-        for (const [i, arg] of args.entries()) {
+        for (let [i, arg] of args.entries()) {
             if (textContent !== '') {
                 textContent += ' '
             }
             if (typeof arg === 'object') {
+                arg = {...arg}
+                delete arg.publicKey
                 textContent += JSON.stringify(arg, null, 2)
                 if (args.length - 1 !== i) {
                     textContent += '\n'
@@ -51,19 +53,19 @@ const log = (...args) => {
 
 const logEvents = (nodeName, node) => {
     const events = [
-        'connection:close',
+        // 'connection:close',
         'connection:open',
-        'connection:prune',
-        'peer:connect',
-        'peer:disconnect',
-        'peer:discovery',
-        'peer:identify',
-        'peer:update',
-        'self:peer:update',
-        'start',
-        'stop',
-        'transport:close',
-        'transport:listening',
+        // 'connection:prune',
+        // 'peer:connect',
+        // 'peer:disconnect',
+        // 'peer:discovery',
+        // 'peer:identify',
+        // 'peer:update',
+        // 'self:peer:update',
+        // 'start',
+        // 'stop',
+        // 'transport:close',
+        // 'transport:listening',
     ]
     const logEvent = (event) => log(nodeName, event.type, event.detail)
     events.forEach(event => node.addEventListener(event, logEvent))
