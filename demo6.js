@@ -15,7 +15,7 @@ import { webRTCDirect } from '@libp2p/webrtc'
 import { webSockets } from '@libp2p/websockets'
 // import { circuitRelayTransport } from '@libp2p/circuit-relay-v2'
 
-document.title = 'v1'
+document.title = 'v2'
 
 const log = (...args) => {
     console.log(...args)
