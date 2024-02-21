@@ -62,7 +62,7 @@ const logEvents = (nodeName, node) => {
         'peer:disconnect',
         'peer:discovery',
         'peer:identify',
-        'peer:update',
+        // 'peer:update',
         'self:peer:update',
         'start',
         'stop',
