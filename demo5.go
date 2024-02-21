@@ -21,6 +21,8 @@ import (
     "github.com/libp2p/go-libp2p/core/network"
 )
 
+var protocolPrefix = dht.ProtocolPrefix("/ipfs") // will give /ipfs/kad/1.0.0
+
 func main() {
     ctx, cancel := context.WithCancel(context.Background())
     defer cancel()
@@ -96,7 +98,7 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/ipfs/lan"), // will give /ipfs/lan/kad/1.0.0
+        protocolPrefix,
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
     )
     if err != nil {
@@ -129,7 +131,7 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/ipfs/lan/kad/1.0.0"),
+        protocolPrefix,
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
         dht.BootstrapPeers(*bootstrapPeer),
     )
