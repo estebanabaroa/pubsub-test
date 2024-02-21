@@ -27,7 +27,7 @@ const log = (...args) => {
             if (typeof arg === 'object') {
                 arg = {...arg}
                 delete arg.publicKey
-                delete arg.peerRecordEnvelope
+                arg.peer && delete arg.peer.peerRecordEnvelope
                 delete arg.multihash
                 textContent += JSON.stringify(arg, null, 2)
                 if (args.length - 1 !== i) {
