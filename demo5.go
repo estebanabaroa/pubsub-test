@@ -60,8 +60,6 @@ func main() {
         }
     }
 
-    bootstrapMultiaddressString = "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"
-
     // create pubsub peers and connect them to boostrap peer
     go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
 
