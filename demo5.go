@@ -98,7 +98,7 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/ipfs/lan/kad/1.0.0"),
+        dht.ProtocolPrefix("/ipfs/lan"), // will give /ipfs/lan/kad/1.0.0
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
     )
     if err != nil {
