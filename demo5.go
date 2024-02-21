@@ -60,6 +60,8 @@ func main() {
         }
     }
 
+    bootstrapMultiaddressString = "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"
+
     // create pubsub peers and connect them to boostrap peer
     go makePubsubPeer(ctx, bootstrapMultiaddressString, topicString)
 
@@ -96,7 +98,7 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/plebbit/lan"),
+        dht.ProtocolPrefix("/ipfs/lan/kad/1.0.0"),
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
     )
     if err != nil {
@@ -129,7 +131,7 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/plebbit/lan"),
+        dht.ProtocolPrefix("/ipfs/lan/kad/1.0.0"),
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
         dht.BootstrapPeers(*bootstrapPeer),
     )
