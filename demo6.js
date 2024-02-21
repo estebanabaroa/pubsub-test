@@ -28,6 +28,7 @@ const log = (...args) => {
                 arg = {...arg}
                 delete arg.publicKey
                 delete arg.peerRecordEnvelope
+                delete arg.multihash
                 textContent += JSON.stringify(arg, null, 2)
                 if (args.length - 1 !== i) {
                     textContent += '\n'
