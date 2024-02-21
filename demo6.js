@@ -53,19 +53,19 @@ const log = (...args) => {
 
 const logEvents = (nodeName, node) => {
     const events = [
-        // 'connection:close',
+        'connection:close',
         'connection:open',
-        // 'connection:prune',
-        // 'peer:connect',
-        // 'peer:disconnect',
-        // 'peer:discovery',
-        // 'peer:identify',
-        // 'peer:update',
-        // 'self:peer:update',
-        // 'start',
-        // 'stop',
-        // 'transport:close',
-        // 'transport:listening',
+        'connection:prune',
+        'peer:connect',
+        'peer:disconnect',
+        'peer:discovery',
+        'peer:identify',
+        'peer:update',
+        'self:peer:update',
+        'start',
+        'stop',
+        'transport:close',
+        'transport:listening',
     ]
     const logEvent = (event) => log(nodeName, event.type, event.detail)
     events.forEach(event => node.addEventListener(event, logEvent))
