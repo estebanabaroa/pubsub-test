@@ -22,6 +22,7 @@ import (
 )
 
 var protocolPrefix = dht.ProtocolPrefix("/ipfs") // will give /ipfs/kad/1.0.0
+var libp2pIoBootstrapPeer, _ = peer.AddrInfoFromString("/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb")
 
 func main() {
     ctx, cancel := context.WithCancel(context.Background())
@@ -100,6 +101,7 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
         h, 
         protocolPrefix,
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
+        dht.BootstrapPeers(*libp2pIoBootstrapPeer),
     )
     if err != nil {
         return nil, err
@@ -133,7 +135,7 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
         h, 
         protocolPrefix,
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
-        dht.BootstrapPeers(*bootstrapPeer),
+        dht.BootstrapPeers(*bootstrapPeer, *libp2pIoBootstrapPeer),
     )
     if err != nil {
         fmt.Println(err)
