@@ -27,6 +27,7 @@ const log = (...args) => {
             if (typeof arg === 'object') {
                 arg = {...arg}
                 delete arg.publicKey
+                delete arg.peerRecordEnvelope
                 textContent += JSON.stringify(arg, null, 2)
                 if (args.length - 1 !== i) {
                     textContent += '\n'
