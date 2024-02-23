@@ -8,6 +8,8 @@ const kuboPath = () => path.join(rootPath, 'kubo')
 const ipfsDataPath = path.join(rootPath, '.ipfs')
 const env = {IPFS_PATH: ipfsDataPath}
 
+const bootstrap = '/ip4/127.0.0.1/tcp/37185/p2p/12D3KooWJRP1bWPJYeSusEvVcvRs2ynprT61xaW47bJ9W5H15Wr1'
+
 // use this custom function instead of spawnSync for better logging
 // also spawnSync might have been causing crash on start on windows
 const spawnAsync = (...args) =>
@@ -41,7 +43,7 @@ kubo.start = async () => {
     await spawnAsync(kuboPath(), ['init'], {env, hideWindows: true})
   } catch (e) {}
 
-  await spawnAsync(kuboPath(), ['config', '--json', 'Bootstrap', '["/ip4/127.0.0.1/tcp/44497/p2p/12D3KooWMbbPVGsZYh3ChQjue712NHHGNybRRXwnuSpezYjGbCDS"]'], {env, hideWindows: true})
+  await spawnAsync(kuboPath(), ['config', '--json', 'Bootstrap', `["${bootstrap}"]`], {env, hideWindows: true})
 
   await new Promise((resolve, reject) => {
     const kuboProcess = spawn(kuboPath(), ['daemon', '--migrate', '--enable-namesys-pubsub', '--enable-pubsub-experiment'], {env, hideWindows: true})

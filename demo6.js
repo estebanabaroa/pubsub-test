@@ -115,9 +115,7 @@ const createNode2 = async () => {
         },
         services: {
             identify: identifyService(), // required for peer discovery of pubsub
-            dht: kadDHT({
-                protocolPrefix: '/ipfs', // will give /ipfs/kad/1.0.0
-            }), // p2p peer discovery
+            dht: kadDHT(), // p2p peer discovery
             pubsub: gossipsub({allowPublishToZeroPeers: true})
         }
     })
