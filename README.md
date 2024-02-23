@@ -46,4 +46,4 @@ npm run webpack
 ```
 - commit changes and go to https://estebanabaroa.github.io/pubsub-test/demo6.html (doesn't work on localhost)
 
-https://estebanabaroa.github.io/pubsub-test/demo5.html?/ip4/5.196.247.5/udp/23852/quic-v1/webtransport/certhash/uEiDTOnVKPBtmlvqu6KWEgviY-L8YYXqiQWniGdIX64OGlg/certhash/uEiDD3U_CtllS3IbR5ZGfxR2DsRTOI4GOORNfrhq8ERQ-cw/p2p/12D3KooWNG5JXDqKSXohZihdfo26sCPnCDPeuNYKyVRTevSHZVdv
+https://estebanabaroa.github.io/pubsub-test/demo5.html?/ip4/5.196.247.5/udp/23852/quic-v1/webtransport/certhash/uEiBWglRAFJyhfdqiS98AUtPDVSv1a038RztH1KHXKmspdQ/certhash/uEiA2y_Htlxbn0KJ4oSqlgoMO9lOmgtH_48JsKejXS02GNA/p2p/12D3KooWPKuWr9wxMVur3vzmRV6t6Uut9xsJJxuNAr4sjZ9Zqxy9
