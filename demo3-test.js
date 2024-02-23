@@ -36,7 +36,8 @@ const createNode = async () => {
     // the first node is the bootstrap node
     if (nodeCount !== 1) {
         peerDiscovery.push(bootstrap({
-            list: nodes[0].getMultiaddrs()
+            // list: nodes[0].getMultiaddrs()
+            list: ["/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"]
         }))
     }
 
