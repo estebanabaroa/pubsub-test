@@ -114,10 +114,7 @@ const createNode2 = async () => {
         },
         services: {
             identify: identifyService(), // required for peer discovery of pubsub
-            dht: kadDHT({
-                protocolPrefix: '/plebbit',
-                //  clientMode: true // if not publicaly dialable
-            }), // p2p peer discovery
+            dht: kadDHT(), // p2p peer discovery
             pubsub: gossipsub({
                 allowPublishToZeroPeers: true,
             })

@@ -28,7 +28,7 @@ IPFS_PATH=./.ipfs kubo/test-ipfs config --json Addresses.Swarm '[\"/ip4/0.0.0.0/
 # ps -ax | grep ipfs
 kill \$(ps aux | grep kubo/test-ipfs | awk '{print \$2}')
 IPFS_PATH=./.ipfs kubo/test-ipfs daemon --enable-pubsub-experiment &
-sleep 3
+sleep 5
 IPFS_PATH=./.ipfs kubo/test-ipfs pubsub sub demo &
 while true; do echo hello-from-kubo | IPFS_PATH=./.ipfs kubo/test-ipfs pubsub pub demo; sleep 1; done
 "
