@@ -37,10 +37,18 @@ const createNode = async () => {
     if (nodeCount !== 1) {
         peerDiscovery.push(bootstrap({
             // list: nodes[0].getMultiaddrs()
+            // list: [
+            //     "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
+            //     "/ip4/15.235.132.69/tcp/4001/p2p/12D3KooWCjmgsGijdSWueGxDCQP8XCHAzQfAQq9Nfc5b6MZXVVeo"
+            // ]
             list: [
+                "/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
+                "/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
                 "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
-                "/ip4/15.235.132.69/tcp/4001/p2p/12D3KooWCjmgsGijdSWueGxDCQP8XCHAzQfAQq9Nfc5b6MZXVVeo"
-            ]
+                "/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
+                "/ip4/104.131.131.82/tcp/4001/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
+                "/ip4/104.131.131.82/udp/4001/quic-v1/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ"
+              ]
         }))
     }
 
