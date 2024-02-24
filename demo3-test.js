@@ -37,7 +37,10 @@ const createNode = async () => {
     if (nodeCount !== 1) {
         peerDiscovery.push(bootstrap({
             // list: nodes[0].getMultiaddrs()
-            list: ["/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"]
+            list: [
+                "/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb"
+                "/ip4/15.235.132.69/tcp/4001/p2p/12D3KooWCjmgsGijdSWueGxDCQP8XCHAzQfAQq9Nfc5b6MZXVVeo"
+            ]
         }))
     }
 
