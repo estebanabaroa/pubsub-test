@@ -102,7 +102,7 @@ func makeBootstrapPeer(ctx context.Context, port int, privateKeyString string) (
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/plebbit/lan"),
+        // dht.ProtocolPrefix("/plebbit/lan"),
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
     )
     if err != nil {
@@ -135,7 +135,7 @@ func makePubsubPeer(ctx context.Context, bootstrapMultiaddressString string, top
     _, err = dht.New(
         ctx, 
         h, 
-        dht.ProtocolPrefix("/plebbit/lan"),
+        // dht.ProtocolPrefix("/plebbit/lan"),
         dht.Mode(dht.ModeServer), // can both dht query and respond to dht queries
         dht.BootstrapPeers(*bootstrapPeer),
     )
