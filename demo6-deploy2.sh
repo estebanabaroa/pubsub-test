@@ -16,6 +16,7 @@ if [ -z "${DEPLOY_PASSWORD+xxx}" ]; then echo "DEPLOY_PASSWORD not set" && exit;
 SCRIPT="
 docker ps
 docker exec pubsub-provider /usr/src/pubsub-provider/bin/ipfs config show
+docker exec pubsub-provider /usr/src/pubsub-provider/bin/ipfs swarm addrs local
 docker exec pubsub-provider /usr/src/pubsub-provider/bin/ipfs pubsub sub demo &
 sleep 3
 while true; do docker exec pubsub-provider sh -c \"echo hello-from-kubo | /usr/src/pubsub-provider/bin/ipfs pubsub pub demo\"; sleep 1; done

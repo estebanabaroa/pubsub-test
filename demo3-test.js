@@ -11,6 +11,9 @@ import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
 import { createEd25519PeerId } from '@libp2p/peer-id-factory'
 import { identifyService } from 'libp2p/identify'
 import { kadDHT } from '@libp2p/kad-dht'
+import { autoNAT } from '@libp2p/autonat'
+// import { dcutr } from '@libp2p/dcutr'
+import { uPnPNAT } from '@libp2p/upnp-nat'
 import util from 'util'
 util.inspect.defaultOptions.depth = null
 
@@ -71,7 +74,10 @@ const createNode = async () => {
                 allowPublishToZeroPeers: true,
                 // emitSelf: true,
                 // directPeers: nodeCount !== 1 ? [{id: nodes[0].peerId, addrs: nodes[0].getMultiaddrs()}] : []
-            })
+            }),
+            autoNAT: autoNAT(),
+            // dcutr: dcutr(),
+            upnp: uPnPNAT()
         },
         peerId
     })
