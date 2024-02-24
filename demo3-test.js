@@ -71,19 +71,19 @@ const createNode = async () => {
 
 const logEvents = (nodeName, node) => {
     const events = [
-        'connection:close',
+        // 'connection:close',
         'connection:open',
-        'connection:prune',
+        // 'connection:prune',
         // 'peer:connect',
-        'peer:disconnect',
-        'peer:discovery',
-        'peer:identify',
-        'peer:update',
+        // 'peer:disconnect',
+        // 'peer:discovery',
+        // 'peer:identify',
+        // 'peer:update',
         // 'self:peer:update',
-        'start',
-        'stop',
-        'transport:close',
-        'transport:listening',
+        // 'start',
+        // 'stop',
+        // 'transport:close',
+        // 'transport:listening',
     ]
     const format = (obj) => {
         const formatted = {}
