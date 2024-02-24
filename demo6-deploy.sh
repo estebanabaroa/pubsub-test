@@ -20,8 +20,8 @@ cd /home/test-ipfs
 
 # reinstall kubo
 # rm -fr kubo .ipfs
-# wget https://dist.ipfs.tech/kubo/v0.25.0/kubo_v0.25.0_linux-amd64.tar.gz
-# tar -xvzf kubo_v0.25.0_linux-amd64.tar.gz
+# wget https://dist.ipfs.tech/kubo/v0.26.0/kubo_v0.26.0_linux-amd64.tar.gz
+# tar -xvzf kubo_v0.26.0_linux-amd64.tar.gz
 # mv kubo/ipfs kubo/test-ipfs
 
 IPFS_PATH=./.ipfs kubo/test-ipfs init
