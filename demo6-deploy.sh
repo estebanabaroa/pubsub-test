@@ -31,6 +31,7 @@ IPFS_PATH=./.ipfs kubo/test-ipfs config --json Addresses.API '\"/ip4/127.0.0.1/t
 IPFS_PATH=./.ipfs kubo/test-ipfs config --json Addresses.Swarm '[\"/ip4/0.0.0.0/tcp/23852\",\"/ip6/::/tcp/23852\",\"/ip4/0.0.0.0/udp/23852/quic-v1\",\"/ip4/0.0.0.0/udp/23852/quic-v1/webtransport\"]'
 # ps -ax | grep ipfs
 kill \$(ps aux | grep kubo/test-ipfs | awk '{print \$2}')
+sleep 10
 IPFS_PATH=./.ipfs kubo/test-ipfs daemon --enable-pubsub-experiment &
 sleep 10
 IPFS_PATH=./.ipfs kubo/test-ipfs pubsub sub demo &
